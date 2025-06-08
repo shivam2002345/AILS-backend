@@ -1,7 +1,8 @@
+require('dotenv').config();
 const { BlobServiceClient } = require('@azure/storage-blob');
 
-const connectionString = "DefaultEndpointsProtocol=https;AccountName=ailswebsite;AccountKey=plrus5nsmiq3XoGdgCkovpRNiDd3rVVZAwihqR963frvnKLosUWSdiEMlqzFr32cbQsn92aWi6An+AStNehSzQ==;EndpointSuffix=core.windows.net";
-const containerName = "course-assets"; // You can change this to your preferred container name
+const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
 
 const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
 
