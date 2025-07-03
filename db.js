@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const fs = require("fs");
 require("dotenv").config();
 
 const pool = new Pool({
@@ -7,7 +8,12 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASS,
   port: process.env.DB_PORT,
- 
+  ssl: {
+    rejectUnauthorized: true,
+    ca: fs.readFileSync(process.env.DB_SSL_CERT_PATH).toString(),
+  },
+  idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT) || 10000,
+  connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT) || 10000,
 });
 
 // Test the connection
