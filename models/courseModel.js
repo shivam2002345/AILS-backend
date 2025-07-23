@@ -12,14 +12,14 @@ const Course = {
   },
 
   createCourse: async (courseData) => {
-    const { title, description, price, image_url, course_type, poc_url, category } = courseData;
+    const { title, description, price_dollar, price_inr, image_url, course_type, poc_url, category } = courseData;
   
     try {
-      const { rows } = await pool.query(
-        `INSERT INTO courses (title, description, price, image_url, course_type, poc_url, category)
-         VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
-        [title, description, price, image_url, course_type, poc_url, category]
-      );
+  const { rows } = await pool.query(
+  `INSERT INTO courses (title, description, price_dollar, price_inr, image_url, course_type, poc_url, category)
+   VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+  [title, description, price_dollar, price_inr, image_url, course_type, poc_url, category]
+);
       return rows[0];
     } catch (error) {
       throw new Error(`Database error: ${error.message}`);
@@ -27,12 +27,12 @@ const Course = {
   },
   
   updateCourse: async (id, courseData) => {
-    const { title, description, price, image_url, course_type, poc_url, category } = courseData;
-    const { rows } = await pool.query(
-      `UPDATE courses SET title = $1, description = $2, price = $3, image_url = $4, course_type = $5, poc_url = $6, category = $7
-       WHERE course_id = $8 RETURNING *`,
-      [title, description, price, image_url, course_type, poc_url, category, id]
-    );
+    const { title, description, image_url,price_dollar, price_inr, course_type, poc_url, category } = courseData;
+const { rows } = await pool.query(
+  `UPDATE courses SET title = $1, description = $2, price_dollar = $3, price_inr=$4, image_url = $5, course_type = $6, poc_url = $7, category = $8
+   WHERE course_id = $9 RETURNING *`,
+  [title, description, price_dollar, price_inr, image_url, course_type, poc_url, category, id]
+);
     return rows[0];
   },
 
