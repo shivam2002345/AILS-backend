@@ -23,14 +23,14 @@ exports.getCourseById = async (req, res) => {
 };
 
 exports.createCourse = async (req, res) => {
-  const { title, price, course_type, description, poc_url, category } = req.body;
+  const { title, price_dollar, price_inr, course_type, description, poc_url, category } = req.body;
 
-  if (!title || !price || !course_type) {
-    return res.status(400).json({ 
-      success: false, 
-      message: 'Title, price, and course type are required' 
-    });
-  }
+if (!title || !price_dollar || !course_type) {
+  return res.status(400).json({ 
+    success: false, 
+    message: 'Title, price_dollar, and course type are required' 
+  });
+}
 
   try {
     let imageUrl = null;
@@ -48,7 +48,7 @@ exports.createCourse = async (req, res) => {
 
     const courseData = { 
       title, 
-      price, 
+      price_dollar, price_inr, 
       course_type, 
       description, 
       poc_url: pocUrl, 
